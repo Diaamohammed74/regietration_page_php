@@ -1,5 +1,5 @@
 <?php session_start();?>
-<?php $_SESSION['page']='Register';?>
+<?php $_SESSION['title']='Register';?>
 
 <?php include "layout/header.php"?>
 

@@ -1,5 +1,5 @@
 <?php session_start();?>
-<?php $_SESSION['page']='Home';?>
+<?php $_SESSION['title']='Home';?>
 
 <?php
 if (!isset($_SESSION['login'])) {

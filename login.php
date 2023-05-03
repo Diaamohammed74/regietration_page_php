@@ -1,5 +1,5 @@
 <?php session_start();?>
-<?php $_SESSION['page']='Login';?>
+<?php $_SESSION['title']='Login';?>
 <?php include "layout/header.php"?>
 <div class="container pt-5">
     <div class="row">
