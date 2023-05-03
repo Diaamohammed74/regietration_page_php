@@ -11,7 +11,6 @@ if (isset($_POST['submit'])&& $_SERVER['REQUEST_METHOD']=="POST") {
     $password=sanitize_input($_POST['password']);
     //validation
 
-
     if (emptyinput($email)) {
         $errors[]="Email field is required";
 
@@ -29,22 +28,22 @@ if (isset($_POST['submit'])&& $_SERVER['REQUEST_METHOD']=="POST") {
     }
 
     // check duplicated email
-
+    $password=sha1($password);
     $sql= "SELECT * from `users` where `email`='$email'";
     $result=mysqli_query($connection,$sql);
     $row=mysqli_fetch_assoc($result);
-    $hashed_pass=$row['password'];
-    if ($row['email']!=$email)
+    if ($row['email']!=$email || $password!==$row['password'])
     {
-        $errors[]="Email is not existed";
+        $errors[]="These credintials doesn`t match our records";
     }
-    // if (!password_verify($password,$hashed_pass)) {
-    //     $errors[]="wrong password";}
-    // foreach ($result1 as $row) {
-    //     if ($row['email']!=$email) {
+    // foreach ($row as $item)
+    // {
+    //     if ($item['email']!=$email)
+    //     {
     //         $errors[]="Email is not existed";
     //     }
-    //     if (password_verify($password,$row['password'])) {
+    //     if (!password_verify($password,$row['password']))
+    //     {
     //         $errors[]="wrong password";
     //     }
     // }
@@ -52,8 +51,12 @@ if (isset($_POST['submit'])&& $_SERVER['REQUEST_METHOD']=="POST") {
         $_SESSION['success']=['Logged in Successfuly'];
         $_SESSION['login']=true;
         $_SESSION['username']=$row['name'];
+        $_SESSION['uesr_id']=$row['id'];
         header("location: ../home.php");
-    }else {
+    }
+    else
+    {
+        $_SESSION['email']=$email;
         $_SESSION['errors']=$errors;
         header("location: ../login.php");
     }

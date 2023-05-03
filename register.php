@@ -1,8 +1,12 @@
 <?php session_start();?>
+<?php 
+if (isset($_SESSION['login']))
+{
+    header("location: home.php");
+}
+?>
 <?php $_SESSION['title']='Register';?>
-
 <?php include "layout/header.php"?>
-
 <div class="container pt-5">
     <div class="row">
         <div class="col-8 mx-auto">
@@ -12,7 +16,6 @@
                 <?php echo $error;?>
             </div>
             <?php endforeach;?>
-            <?php unset($_SESSION['errors']);?>
             <?php endif;?>
             <?php if (isset($_SESSION['success'])):?>
             <?php foreach($_SESSION['success'] as $success):?>
@@ -28,12 +31,15 @@
             <form class="border p-4" action="handelers/register.php" method="post">
                 <div class="mb-3">
                     <label for="exampleInputName" class="form-label">Username</label>
-                    <input type="name" name="name" class="form-control" id="exampleInputName">
+                    <input type="name" name="name" class="form-control" value="<?= isset($_SESSION['name']) ? $_SESSION['name'] : ' ';?>">
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" name="email" class="form-control">
+                    <input type="email" name="email" class="form-control" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : ' ';?>">
                 </div>
+                <?php unset($_SESSION['errors']);?>
+                <?php unset($_SESSION['email']);?>
+                <?php unset($_SESSION['name']);?>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
                     <input type="password" name="password" class="form-control">
@@ -50,5 +56,4 @@
     </div>
 </div>
 </body>
-
 </html>

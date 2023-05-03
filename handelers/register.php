@@ -1,11 +1,11 @@
 <?php
 session_start();
 $errors=[];
-include "../validation/validation.php";
-include "../database/database.php";
 
 if (isset($_POST['submit'])&& $_SERVER['REQUEST_METHOD']=="POST")
 {
+    include "../validation/validation.php";
+    include "../database/database.php";
     
     //get
     $username = mysqli_real_escape_string($connection, $_POST['name']);
@@ -86,11 +86,14 @@ if (isset($_POST['submit'])&& $_SERVER['REQUEST_METHOD']=="POST")
     }
     else
     {
+        $_SESSION['name']=$username;
+        $_SESSION['email']=$email;
         $_SESSION['errors']=$errors;
         header("location: ../register.php");
     }
 }
-else{
+else
+{
     $errors[]="Unexpected error";
     $_SESSION['errors']=$errors;
     header("location: ../register.php");
